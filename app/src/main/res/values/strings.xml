@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">ContactsList</string>
+    <string name="contact1_name">Vladimir</string>
+    <string name="contact1_lastname">Kuznetsov</string>
+    <string name="contact1_phone_number">8951456789</string>
+    <string name="contact2_name">Ivan</string>
+    <string name="contact2_lastname">Ivanov</string>
+    <string name="contact2_phone_number">89114561237</string>
+    <string name="contact3_name">Petr</string>
+    <string name="contact3_lastname">Sidorov</string>
+    <string name="contact3_phone_number">89145231478</string>
+    <string name="contact4_name">Vasilii</string>
+    <string name="contact4_lastname">Petrov</string>
+    <string name="contact4_phone_number">8913652357</string>
+    <string name="contact5_name">Oleg</string>
+    <string name="contact5_lastname">Chebunin</string>
+    <string name="contact5_phone_number">89647565222</string>
+    <string name="name_text">Name</string>
+    <string name="lastname_text">Lastname</string>
+    <string name="phone_number_text">Phone number</string>
+    <string name="edit_button">Edit</string>
+</resources>
