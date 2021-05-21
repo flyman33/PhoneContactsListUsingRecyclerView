@@ -12,7 +12,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/contact" />
+        android:layout_marginTop="16dp"
+        app:srcCompat="@drawable/contact"
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/contact_name"

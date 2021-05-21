@@ -1,22 +1,25 @@
-package com.example.contactslist
+package com.example.contactslistusingrecyclerview
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 
 class ContactFragment: Fragment() {
 
     private var name: String? = null
     private var lastname: String? = null
     private var phoneNumber: String? = null
-    private var idLayout: Int = 0
+    private var idImage: Int = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -24,7 +27,7 @@ class ContactFragment: Fragment() {
         name = requireArguments().getString(NAME_EXTRA)
         lastname = requireArguments().getString(LASTNAME_EXTRA)
         phoneNumber = requireArguments().getString(PHONE_NUMBER_EXTRA)
-        idLayout = requireArguments().getInt(ID_EXTRA)
+        idImage = requireArguments().getInt(ID_EXTRA)
     }
 
     override fun onCreateView(
@@ -39,9 +42,16 @@ class ContactFragment: Fragment() {
         view.findViewById<TextView>(R.id.contact_name).text = name
         view.findViewById<TextView>(R.id.contact_lastname).text = lastname
         view.findViewById<TextView>(R.id.contact_phone_number).text = phoneNumber
+
+        Glide
+            .with(view.context)
+            .load("https://source.unsplash.com/random/300x200?sig=${idImage}")
+            .centerCrop()
+            .into(view.findViewById(R.id.contact_image))
+
         view.findViewById<Button>(R.id.edit_button).setOnClickListener() {
 
-            val editContactDialogFragment = EditContactDialogFragment.newInstance(name, lastname, phoneNumber, idLayout)
+            val editContactDialogFragment = EditContactDialogFragment.newInstance(name, lastname, phoneNumber, idImage)
 
             editContactDialogFragment.setTargetFragment(this, REQUEST)
             editContactDialogFragment.show(requireFragmentManager(), "editContact")
@@ -57,24 +67,23 @@ class ContactFragment: Fragment() {
                     val name = data?.getStringExtra(EditContactDialogFragment.NAME_EXTRA).toString()
                     val lastname = data?.getStringExtra(EditContactDialogFragment.LASTNAME_EXTRA).toString()
                     val phoneNumber = data?.getStringExtra(EditContactDialogFragment.PHONE_NUMBER_EXTRA).toString()
-                    val idLayout = data?.getIntExtra(EditContactDialogFragment.ID_EXTRA, -1)
+                    val position = data?.getIntExtra(EditContactDialogFragment.ID_EXTRA, -1)
 
                     view?.findViewById<TextView>(R.id.contact_name)?.text = name
                     view?.findViewById<TextView>(R.id.contact_lastname)?.text = lastname
                     view?.findViewById<TextView>(R.id.contact_phone_number)?.text = phoneNumber
 
+                    val image = view?.findViewById<ImageView>(R.id.contact_image).toString()
+                    Log.d("asd", image)
+
                     fragmentManager?.apply {
-                        val frag = ListContactsFragment.newInstance()
                         val bundle = Bundle()
                         bundle.putString(NAME_EXTRA, name)
                         bundle.putString(LASTNAME_EXTRA, lastname)
                         bundle.putString(PHONE_NUMBER_EXTRA, phoneNumber)
-                        bundle.putInt(ID_EXTRA, idLayout!!)
-                        frag.arguments = bundle
-
-                        val transaction = beginTransaction()
-                        transaction.replace(R.id.frame_layout, frag)
-                        transaction.commit()
+                        bundle.putInt(ID_EXTRA, position!!)
+                        MainActivity.isOld = true
+                        setFragmentResult("KEY", bundle)
                     }
                 }
             }
@@ -89,12 +98,12 @@ class ContactFragment: Fragment() {
         const val ID_EXTRA = "ID_EXTRA"
         const val REQUEST = 1
 
-        fun newInstance(name:String, lastName: String, phoneNumber: String, id: Int) = ContactFragment().apply {
+        fun newInstance(name:String, lastName: String, phoneNumber: String, idImage: Int) = ContactFragment().apply {
             arguments = Bundle().also {
                 it.putString(NAME_EXTRA, name)
                 it.putString(LASTNAME_EXTRA, lastName)
                 it.putString(PHONE_NUMBER_EXTRA, phoneNumber)
-                it.putInt(ID_EXTRA, id)
+                it.putInt(ID_EXTRA, idImage)
             }
         }
     }

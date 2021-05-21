@@ -1,4 +1,4 @@
-package com.example.contactslist
+package com.example.contactslistusingrecyclerview
 
 import android.app.Activity
 import android.app.Dialog
@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 
 class EditContactDialogFragment: DialogFragment() {
 
@@ -49,12 +50,12 @@ class EditContactDialogFragment: DialogFragment() {
         const val PHONE_NUMBER_EXTRA = "PHONE_NUMBER_EXTRA"
         const val ID_EXTRA = "ID_EXTRA"
 
-        fun newInstance(name: String?, lastName: String?, phoneNumber: String?, id: Int) = EditContactDialogFragment().apply {
+        fun newInstance(name: String?, lastName: String?, phoneNumber: String?, position: Int) = EditContactDialogFragment().apply {
             arguments = Bundle().also {
                 it.putString(NAME_EXTRA, name)
                 it.putString(LASTNAME_EXTRA, lastName)
                 it.putString(PHONE_NUMBER_EXTRA, phoneNumber)
-                it.putInt(ID_EXTRA, id)
+                it.putInt(ID_EXTRA, position)
             }
         }
     }

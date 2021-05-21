@@ -1,17 +1,19 @@
-package com.example.contactslist
+package com.example.contactslistusingrecyclerview
 
-import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        var isOld = false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val isTablet = resources.getBoolean(R.bool.isTablet)
-        if(!isTablet) requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         supportFragmentManager.apply {
             val listContactsFragment = ListContactsFragment.newInstance()
